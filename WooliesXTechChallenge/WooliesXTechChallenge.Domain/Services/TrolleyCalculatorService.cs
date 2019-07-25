@@ -53,7 +53,8 @@ namespace WooliesXTechChallenge.Domain.Services
             var validSpecials = new List<Special>();
 
             //Filter only those specials which have Total less than the full price total for bundeled products.
-            foreach (var special in trolley.Specials.Where(x => x.Total < x.FullTotal))
+            var orderedSpecials = trolley.Specials.Where(x => x.Total < x.FullTotal).OrderByDescending(s => (s.FullTotal - s.Total));
+            foreach (var special in orderedSpecials)
             {
                 bool applySpecial = true;
                 foreach (var qty in special.Quantities)
